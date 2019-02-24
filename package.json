@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node src/server",
     "test": "mocha src/**/*.spec.js --timeout 10000",
     "update-db": "node src/updater/updater.js"
   },
@@ -19,8 +20,10 @@
     "mocha": "^6.0.1"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
     "delay": "^4.1.0",
     "dotenv": "^6.2.0",
+    "express": "^4.16.4",
     "moment": "^2.24.0",
     "mongoose": "^5.4.15",
     "node-fetch": "^2.3.0"
