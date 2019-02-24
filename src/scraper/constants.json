@@ -1,0 +1,4 @@
+{
+  "SurfaceDataValidFromDateFormat": "hh:mma DDDD DD MMM YYYY",
+  "SurfaceDataURL": "https://www.metservice.com/publicData/codedDataSYNOP_synop-report"
+}
