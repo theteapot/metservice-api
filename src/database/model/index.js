@@ -1,7 +1,5 @@
-const { server } = require('../index')
-const MetData = require('../schemas/metDataSchema')
+const MetDataModel = require('./metDataModel')
 
-async function saveCodes (codes) {
-  const newCode = new MetData(codes)
-  await newCode.save()
+module.exports = {
+  MetDataModel
 }

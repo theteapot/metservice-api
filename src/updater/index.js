@@ -10,6 +10,18 @@ const {
   SurfaceDataURL
 } = require('./constants.json')
 
+/**
+ * @typedef {Object} MetData
+ * @property {string} timestamp The time of the codes
+ * @property {string[]} codes Synoptic codes
+ */
+
+/**
+ * @description Makes a request for metservice data and returns a parsed
+ * response
+ *
+ * @returns {MetData[]} Array of metdata synoptic objects
+ */
 async function getMetServiceData () {
   if (!SurfaceDataURL || typeof SurfaceDataURL !== 'string') {
     throw new Error('Must pass a string for the SurfaceDataURL')
@@ -31,7 +43,7 @@ async function getMetServiceData () {
       )
     }
 
-    let time = new moment(validFrom, SurfaceDataValidFromDateFormat)
+    let time = new moment(validFrom, SurfaceDataValidFromDateFormat).toDate()
 
     // The string data contains codes, each code seperated by a '=',
     // and each code containing one more more <br> tag
@@ -49,11 +61,20 @@ async function getMetServiceData () {
   return parsedData
 }
 
-async function saveMetServiceData () {
+/**
+ * @description Gets met service objects and saves them to the database.
+ *
+ * @returns {Object[]} Array of mongo db schema objects
+ */
+async function updateMetServiceData () {
   let data = await getMetServiceData()
-  for (let d of data) {
-    await saveCodes(d)
-  }
+  console.log(
+    `Saving data for: ${data.reduce(
+      (timestamps, { timestamp }) => `${timestamps}\n${timestamp}`,
+      '\n'
+    )}`
+  )
+  return Promise.all(data.map(d => saveCodes(d)))
 }
 
-module.exports = { getMetServiceData, saveMetServiceData }
+module.exports = { getMetServiceData, updateMetServiceData }
