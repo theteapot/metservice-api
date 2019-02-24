@@ -12,8 +12,6 @@ async function getCodes ({
   start = new moment().startOf('week').toDate(),
   stop = new moment().endOf('week').toDate()
 } = {}) {
-  console.log(`Finding codes between ${start} - ${stop}`)
-
   return MetData.find({ timestamp: { $gte: start, $lte: stop } })
 }
 

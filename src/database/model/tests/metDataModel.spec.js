@@ -1,9 +1,14 @@
 const assert = require('assert')
 const moment = require('moment')
+const { connect, disconnect } = require('../../index')
 
 const { saveCodes, getCodes } = require('../metDataModel')
 
 describe('Testing MetData objects', () => {
+  before('Connect db before testing', async () => {
+    await connect()
+  })
+
   let metDataObjects
   it('Should get MetData objects', async () => {
     metDataObjects = await getCodes({
@@ -17,5 +22,9 @@ describe('Testing MetData objects', () => {
       8,
       `Expected 8 codes, got ${metDataObjects.length}`
     )
+  })
+
+  after('Should disconnect db', async () => {
+    await disconnect()
   })
 })

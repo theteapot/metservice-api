@@ -1,8 +1,13 @@
 const assert = require('assert')
+const { connect, disconnect } = require('../../database/index')
 
 const { getMetServiceData, updateMetServiceData } = require('../index')
 
 describe('Should test the web updater', () => {
+  before('Connect db before testing', async () => {
+    await connect()
+  })
+
   let metDataResults, uploadResults
   it('Should get the website and return dated codes', async () => {
     metDataResults = await getMetServiceData()
@@ -38,5 +43,9 @@ describe('Should test the web updater', () => {
         `Could not find a matching timestamp for ${metData.timestamp}`
       )
     }
+  })
+
+  after('Should disconnect db', async () => {
+    await disconnect()
   })
 })
