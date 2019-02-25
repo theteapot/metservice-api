@@ -13,6 +13,8 @@ async function getCodes ({
   start = new moment().startOf('week').toDate(),
   stop = new moment().endOf('week').toDate()
 } = {}) {
+  console.log(`Finding codes between ${start} and ${stop}`)
+
   return MetData.find({ timestamp: { $gte: start, $lte: stop } })
 }
 
@@ -20,7 +22,7 @@ async function getCodesPrecipitation ({
   start = new moment().startOf('week').toDate(),
   stop = new moment().endOf('week').toDate()
 } = {}) {
-  let results = await MetData.find({ timestamp: { $gte: start, $lte: stop } })
+  let results = await getCodes({ start, stop })
 
   return results.map(({ timestamp, codes }) => {
     codes = codes.map(code => getPrecipitation({ code }))
@@ -32,25 +34,29 @@ async function getGeoJSON ({
   start = new moment().startOf('week').toDate(),
   stop = new moment().endOf('week').toDate()
 } = {}) {
-  let data = await MetData.find({ timestamp: { $gte: start, $lte: stop } })
+  let data = await getCodes({ start, stop })
 
   let features = data.reduce((features, { timestamp, codes }) => {
     for (let code of codes) {
       let { lat = 0, lng = 0, name = 'No name' } = getStation({ code }) || {}
 
-      let { hoursPrecedingObservation = 0, amountOfPrecipitation = 0 } =
-        getPrecipitation({ code }) || {}
+      let precipitationCodes = getPrecipitation({ code }) || []
 
-      features.push({
-        type: 'Feature',
-        properties: {
-          timestamp,
-          name,
-          hoursPrecedingObservation,
-          amountOfPrecipitation
-        },
-        geometry: { type: 'Point', coordinates: [lng, lat, 0] }
-      })
+      for (let {
+        hoursPrecedingObservation,
+        amountOfPrecipitation
+      } of precipitationCodes) {
+        features.push({
+          type: 'Feature',
+          properties: {
+            timestamp,
+            name,
+            hoursPrecedingObservation,
+            amountOfPrecipitation
+          },
+          geometry: { type: 'Point', coordinates: [lng, lat, 0] }
+        })
+      }
     }
     return features
   }, [])

@@ -45,7 +45,11 @@ describe('Testing MetData objects', () => {
   })
 
   it('Should get geoJson object', async () => {
-    let geoJSON = await getGeoJSON()
+    let geoJSON = await getGeoJSON({
+      start: moment()
+        .startOf('month')
+        .toDate()
+    })
     assert.equal(
       geoJSON.type,
       'FeatureCollection',
@@ -86,6 +90,7 @@ describe('Testing MetData objects', () => {
           properties.hoursPrecedingObservation
         }`
       )
+
       assert.equal(
         properties.amountOfPrecipitation === null ||
           properties.amountOfPrecipitation === undefined,
