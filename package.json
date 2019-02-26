@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/server",
-    "test": "nyc mocha src/**/*.spec.js --timeout 10000",
+    "test": "nyc mocha src/**/*.spec.js --timeout 30000",
     "update-db": "node src/updater/updater.js"
   },
   "author": "",
@@ -22,9 +22,11 @@
   },
   "dependencies": {
     "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
     "delay": "^4.1.0",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
+    "metservice-synoptic-codes": "^1.0.2",
     "moment": "^2.24.0",
     "mongoose": "^5.4.15",
     "node-fetch": "^2.3.0"
