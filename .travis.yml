@@ -3,6 +3,4 @@ node_js:
   - "node"
 
 env:
-  - MONGODB_URI=mongodb://heroku_5r6q1qj3:hc42si5rtlpf7r00s0r78ql310@ds349455.mlab.com:49455/heroku_5r6q1qj3
-  - PORT=3000
-  - PACKAGE_VERSION="1.0.*"
+  - PORT=3000 MONGODB_URI=mongodb://heroku_5r6q1qj3:hc42si5rtlpf7r00s0r78ql310@ds349455.mlab.com:49455/heroku_5r6q1qj3
