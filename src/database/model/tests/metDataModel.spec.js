@@ -18,29 +18,29 @@ describe('Testing MetData objects', () => {
   let metDataObjects
   it('Should get MetData objects', async () => {
     metDataObjects = await getCodes({
-      start: new Date('2019-02-24T00:00:00'),
-      stop: new Date('2019-02-24T23:59:59')
+      start: new Date(Date.UTC(2019, 1, 24, 00, 00, 00, 0)),
+      stop: new Date(Date.UTC(2019, 1, 24, 23, 59, 59, 999))
     })
 
     // Recordings are made 8 times a day (once every 3 hours)
     assert.equal(
       metDataObjects.length,
-      8,
-      `Expected 8 codes, got ${metDataObjects.length}`
+      10,
+      `Expected 10 codes, got ${metDataObjects.length}`
     )
   })
 
   it('Should get MetData precipitation', async () => {
     metDataObjects = await getCodesPrecipitation({
-      start: new Date('2019-02-24T00:00:00'),
-      stop: new Date('2019-02-24T23:59:59')
+      start: new Date(Date.UTC(2019, 01, 24, 00, 00, 00, 0)),
+      stop: new Date(Date.UTC(2019, 01, 24, 23, 59, 59, 999))
     })
 
     // Recordings are made 8 times a day (once every 3 hours)
     assert.equal(
       metDataObjects.length,
-      8,
-      `Expected 8 codes, got ${metDataObjects.length}`
+      10,
+      `Expected 10 codes, got ${metDataObjects.length}`
     )
   })
 
