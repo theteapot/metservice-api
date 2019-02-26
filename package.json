@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/server",
-    "test": "mocha src/**/*.spec.js --timeout 30000",
+    "test": "nyc mocha src/**/*.spec.js --timeout 30000",
     "update-db": "node src/updater/updater.js"
   },
   "author": "",
@@ -17,7 +17,8 @@
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
-    "mocha": "^6.0.1"
+    "mocha": "^6.0.1",
+    "nyc": "^13.3.0"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
